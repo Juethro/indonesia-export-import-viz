@@ -1,4 +1,5 @@
-const options = {
+// resources/js/value.js
+const optionsNilai = {
     chart: {
         height: "100%",
         maxWidth: "100%",
@@ -62,12 +63,19 @@ const options = {
     },
     yaxis: {
         show: false,
-        },
-    }
+    },
+}
 
-if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
-    const chart = new ApexCharts(document.getElementById("area-chart"), options);
-    chart.render();
+if (document.getElementById("area-chart-nilai") && typeof ApexCharts !== 'undefined') {
+    const chartNilai = new ApexCharts(document.getElementById("area-chart-nilai"), optionsNilai);
+    chartNilai.render();
 } else {
-    console.error("Tidak dapat menemukan elemen dengan id 'area-chart' atau ApexCharts tidak terdefinisi.");
+    console.error("Tidak dapat menemukan elemen dengan id 'area-chart-nilai' atau ApexCharts tidak terdefinisi.");
+}
+
+if (document.getElementById("area-chart-nilai-2") && typeof ApexCharts !== 'undefined') {
+    const chartNilai2 = new ApexCharts(document.getElementById("area-chart-nilai-2"), optionsNilai);
+    chartNilai2.render();
+} else {
+    console.error("Tidak dapat menemukan elemen dengan id 'area-chart-nilai-2' atau ApexCharts tidak terdefinisi.");
 }
