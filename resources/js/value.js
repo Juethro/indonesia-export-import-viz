@@ -31,7 +31,7 @@ const optionsNilai = {
         enabled: false,
     },
     stroke: {
-        width: 6,
+        width: 3,
     },
     grid: {
         show: true,
@@ -52,19 +52,19 @@ const optionsNilai = {
     xaxis: {
         categories: ['01 Februari', '02 Februari', '03 Februari', '04 Februari', '05 Februari', '06 Februari', '07 Februari'],
         labels: {
-            show: false,
+            show: true,
         },
         axisBorder: {
-            show: false,
+            show: true,
         },
         axisTicks: {
-            show: false,
+            show: true,
         },
     },
     yaxis: {
-        show: false,
-    },
-}
+        show: true,
+        },
+    }
 
 if (document.getElementById("area-chart-nilai") && typeof ApexCharts !== 'undefined') {
     const chartNilai = new ApexCharts(document.getElementById("area-chart-nilai"), optionsNilai);
@@ -79,3 +79,16 @@ if (document.getElementById("area-chart-nilai-2") && typeof ApexCharts !== 'unde
 } else {
     console.error("Tidak dapat menemukan elemen dengan id 'area-chart-nilai-2' atau ApexCharts tidak terdefinisi.");
 }
+
+// OptionHandler
+function getData(tahun, jenis) {
+    fetch(`/data/chart_1/${jenis}/${tahun}`)
+        .then(response => response.json())
+        .then(data => {
+            options.series[0].data = data.dataAngka;
+            options.xaxis.categories = data.bulan;
+            chart.updateOptions(options);
+        })
+        .catch(error => console.error('Error:', error));
+}
+
