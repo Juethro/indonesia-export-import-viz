@@ -1,14 +1,23 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\query_handler;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
 
-Route::get('/data/chart_1/{jenis}/{tahun}', [query_handler::class, 'chart_1_get']);
-Route::get('/data/chart_2/{jenis}/{tahun}', [query_handler::class, 'chart_2_get']);
-Route::get('/data/chart_3/{jenis}/{tahun}', [query_handler::class, 'chart_3_get']);
-Route::get('/data/chart_4/{jenis}/{tahun}', [query_handler::class, 'chart_4_get']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::post('/data/chart_5', [query_handler::class, 'mainDataControl'])->middleware(['auth', 'verified']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
