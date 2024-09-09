@@ -12,7 +12,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::post('/data/chart_5', [query_handler::class, 'mainDataControl'])->middleware(['auth', 'verified']);
+Route::post('/data/chart_5', [query_handler::class, 'totalDataControl'])->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

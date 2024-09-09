@@ -3,38 +3,58 @@ var options = {
         type: 'line',
         height: 350
     },
+    fill: {
+        colors: ['#FA5C49']
+    },
+    stroke: {
+        show: true
+    },
+    // Data
     series: [{
         name: '',
         data: []
     }],
+    dataLabels: {
+        enabled: false
+    },
     xaxis: {
         categories: []
     },
     title: {
-        text: ' Trend Over Month ',
-        align: 'center'
+        text: '',
+        align: 'left'
     }
 };
 
+// Render Pertama Options (tanpa data)
 var chart = new ApexCharts(document.getElementById("chart"), options);
-
 chart.render();
 
+// Ganti Chart ke BarChart ataupun Sebaliknya
+document.getElementById('chart_type').addEventListener('change', function() {
+    if (this.value === '0') {
+        options.chart.type = 'line';
+        options.stroke.show = true;
+    } else if (this.value === '1') {
+        options.chart.type = 'bar';
+        options.stroke.show = false;
+    }
+    chart.updateOptions(options);
+});
 
+
+// Jalankan fungsi ketika halaman barusaja diload
 document.addEventListener('DOMContentLoaded', function() {
     postData();
 });
 
-
-
+// Fungsi Ambil Data Dari Rute Laravel
 window.postData = function() {
-    // console.log(optionsNilai);
-    console.log({
-        tahun: document.getElementById("tahun").value,
-        tipe: document.getElementById("tipe").value,
-        jenis: document.getElementById("jenis").value,
-        volorval: document.getElementById("volorval").value,
-    });
+    // console.log({
+    //     tahun: document.getElementById("tahun").value,
+    //     tipe: document.getElementById("tipe").value,
+    //     volorval: document.getElementById("volorval").value,
+    // });
     fetch('/data/chart_5', {
         method: 'POST',
         headers: {
@@ -44,7 +64,6 @@ window.postData = function() {
         body: JSON.stringify({
             tahun: document.getElementById("tahun").value,
             tipe: document.getElementById("tipe").value,
-            jenis: document.getElementById("jenis").value,
             volorval: document.getElementById("volorval").value,
         }),
     })
@@ -55,7 +74,6 @@ window.postData = function() {
         options.xaxis.categories = data.bulan;
         options.title.text = document.getElementById('volorval').value + " Trend Over Month In " + document.getElementById('tahun').value;
         chart.updateOptions(options);
-        console.log(data);
     })
     .catch(error => console.error("Error:", error));
 }

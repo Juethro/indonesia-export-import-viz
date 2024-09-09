@@ -11,9 +11,9 @@
                 <div class="p-8 text-gray-900">
                     <div class="flex justify-end mb-4">
                         <div class="form-group">
-                            <select class="form-control px-10 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" id="volorval">
-                                <option value="Value">Value</option>
-                                <option value="Volume">Volume</option>
+                            <select class="form-control px-10 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" id="chart_type">
+                                <option value="0" selected>Line Chart</option>
+                                <option value="1">Bar Chart</option>
                             </select>
                         </div>
                     </div>
@@ -37,16 +37,14 @@
                                 <option value="ekspor">Ekspor</option>
                             </select>
                         </div>
-    
-                        <!-- Jenis Select -->
+
                         <div class="form-group">
-                            
-                            <select class="form-control border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" id="jenis">
-                                <option value="Oil & Gas">Oil & Gas</option>
-                                <option value="Non Oil &Gas">Non Oil & Gas</option>
+                            <select class="form-control border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" id="volorval">
+                                <option value="Value">Value</option>
+                                <option value="Volume">Volume</option>
                             </select>
                         </div>
-    
+                                
                         <!-- Go Button -->
                         <button onclick="postData()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
                             Go
