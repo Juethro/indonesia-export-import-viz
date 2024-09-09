@@ -1,6 +1,5 @@
-import './volume';
-import './value';
-import './chartonly';
+import './chart_2'; // Chart kedua
+import './chartonly'; // Chart pertama
 
 import Alpine from 'alpinejs';
 

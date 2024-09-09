@@ -103,17 +103,8 @@ class query_handler extends Controller
         }
     }
 
-    public function multipleLineChartDataYear(String $tipe, Int $tahun, String $jenis, String $volorval)
-    {
-        // Data linechart impor dan ekspor, pilih tahun dan jenis
 
-    }
-
-    public function barChartDataType(Int $tahun)
-    {
-
-    }
-
+    // Selamat Berjuang!!
 
     
 }

@@ -17,7 +17,7 @@
                             </select>
                         </div>
                     </div>
-                    <div id="chart" class="mb-8"></div>
+                    <div id="chart_1" class="mb-8"></div>
                     <div class="flex flex-wrap space-x-4 justify-center items-center">
                         <!-- Tahun Select -->
                         <div class="form-group">
@@ -46,7 +46,7 @@
                         </div>
                                 
                         <!-- Go Button -->
-                        <button onclick="postData()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                        <button onclick="postData_1()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
                             Go
                         </button>
                     </div>
