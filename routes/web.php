@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
 Route::post('/data/scoreboard', [ChartController::class, 'getScoreboardData'])->middleware(['auth', 'verified']);
 use App\Http\Controllers\ScoreboardController;
 

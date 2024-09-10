@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize scoreboards
+    // Initialize scoreboards for both Value and Volume
     updateScoreboard('Value');
     updateScoreboard('Volume');
 
@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add event listener for scoreboard type selection change
     document.getElementById('scoreboardType').addEventListener('change', function() {
+        // Update both Value and Volume when the type (impor/ekspor) is changed
         updateScoreboard('Value');
         updateScoreboard('Volume');
     });
@@ -21,8 +22,10 @@ function changeYear(type, delta) {
     let year = parseInt(yearElement.textContent) + delta;
     
     // Ensure year is within valid range (2019 to 2023)
-    year = Math.max(2019, Math.min(2023, year));
-    
+    if (year < 2019 || year > 2023) {
+        return; // Prevent further updates if out of bounds
+    }
+
     yearElement.textContent = year;
     updateScoreboard(type);
 }
@@ -31,7 +34,9 @@ function updateScoreboard(type) {
     const year = document.getElementById(`currentYear${type}`).textContent;
     const tipe = document.getElementById("scoreboardType").value; // 'impor' or 'ekspor'
 
-    console.log(`Updating scoreboard: Year=${year}, Type=${type}, Tipe=${tipe}`);
+    // Reset the scoreboard value before fetching new data
+    const totalElement = document.getElementById(`total${type}`);
+    totalElement.textContent = "Loading...";
 
     fetch('/data/scoreboard', {
         method: 'POST',
@@ -47,14 +52,15 @@ function updateScoreboard(type) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(`Received data:`, data);
-        const totalElement = document.getElementById(`total${type}`);
+        // Ensure scoreboard updates correctly
         if (type === 'Value') {
             totalElement.textContent = `$${data.total.toLocaleString()}`;
         } else {
             totalElement.textContent = data.total.toLocaleString();
         }
     })
-    .catch(error => console.error("Error:", error));
+    .catch(error => {
+        console.error("Error:", error);
+        totalElement.textContent = "Error";  // Display error message in case of failure
+    });
 }
-
