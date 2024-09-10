@@ -30,7 +30,7 @@
                                         @endfor
                                     </select>
                                 </div>
-                
+
                                 <!-- Tipe Select -->
                                 <div class="form-group">
                                     <select class="form-control border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" id="tipe">
@@ -57,7 +57,7 @@
                         <div class="w-full lg:w-1/4 mt-8 lg:mt-0">
                             <div class="bg-gray-100 p-4 rounded-lg">
                                 <h2 class="text-xl font-bold mb-4 text-center">Scoreboards</h2>
-                                
+
                                 <!-- Scoreboard Type Selection -->
                                 <div class="mb-4">
                                     <select id="scoreboardType" class="w-full p-2 border rounded">
@@ -98,7 +98,44 @@
 
 
 
-                        
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- CHART-2 --}}
+            <div class="bg-white overflow-hidden shadow-lg rounded-lg mt-5">
+                <div class="p-8 text-gray-900">
+                    <div id="chart_2" class="mb-8"></div>
+                    <div class="flex flex-wrap space-x-4 justify-center items-center">
+                        <!-- Tahun Select -->
+                        <div class="form-group">
+                            <select class="form-control border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" id="tahun_2">
+                                @for($i = 2019; $i <= 2023; $i++)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <!-- Tipe Select -->
+                        <div class="form-group">
+                            <select class="form-control border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" id="tipe_2">
+                                <option value="impor">Impor</option>
+                                <option value="ekspor">Ekspor</option>
+                            </select>
+                        </div>
+
+                        <!-- Tipe Select -->
+                        <div class="form-group">
+                            <select class="form-control border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" id="volorval_2">
+                                <option value="Value">Value</option>
+                                <option value="Volume">Volume</option>
+                            </select>
+                        </div>
+
+                        <!-- Go Button -->
+                        <button onclick="postData_2()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                            Go
+                        </button>
                     </div>
                 </div>
             </div>

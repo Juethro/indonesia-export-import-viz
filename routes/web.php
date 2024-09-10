@@ -14,6 +14,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::post('/data/chart_5', [query_handler::class, 'totalDataControl'])->middleware(['auth', 'verified']);
+Route::post('/data/chart_7', [query_handler::class, 'comparisonDataControl'])->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

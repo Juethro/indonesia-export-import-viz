@@ -21,7 +21,7 @@ class query_handler extends Controller
             return response()->json(['dataAngka' => $result->dataAngka, 'bulan' => $result->bulan]);
 
         } else if ($validatedData['tipe'] == "impor"){
-            
+
             $result = $this->imporLineChartDataYear($validatedData['tahun'], $validatedData['volorval'])->getData();
             return response()->json(['dataAngka' => $result->dataAngka, 'bulan' => $result->bulan]);
 
@@ -36,7 +36,7 @@ class query_handler extends Controller
         return $this->getLineChartDataYear($model, $tahun, $volorval);
     }
 
-    // IMPOR 
+    // IMPOR
     private function imporLineChartDataYear( Int $tahun, String $volorval)
     {
         $model = impor::class;
@@ -65,13 +65,13 @@ class query_handler extends Controller
                     return $monthMapping[$item->Month];  // Mengurutkan berdasarkan mapping bulan
                 })
                 ->pluck('total');
-            
+
             $bulan = $model::where('Year', $tahun)
                 ->selectRaw('Month')  // Pastikan hanya memilih kolom yang ada dalam group
                 ->groupBy('Month')    // Group by Month
                 ->orderByRaw("FIELD(Month, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')")
                 ->pluck('Month');
-                
+
             return response()->json(['dataAngka' => $dataAngka, 'bulan' => $bulan]);
 
         } else if ($volorval == "Volume"){
@@ -92,7 +92,7 @@ class query_handler extends Controller
                     return $monthMapping[$item->Month];  // Mengurutkan berdasarkan mapping bulan
                 })
                 ->pluck('total');
-            
+
             $bulan = $model::where('Year', $tahun)
                 ->selectRaw('Month')  // Pastikan hanya memilih kolom yang ada dalam group
                 ->groupBy('Month')    // Group by Month
@@ -106,5 +106,81 @@ class query_handler extends Controller
 
     // Selamat Berjuang!!
 
-    
+
+    // Fungsi Utama
+    public function comparisonDataControl(Request $request)
+    {
+        $validatedData = $request->validate([
+            'tahun_2' => 'required|integer',
+            'tipe_2' => 'required|string',
+            'volorval_2' => 'required|string',
+        ]);
+
+        if ($validatedData['tipe_2'] == "ekspor") {
+            $result = $this->eksportComparisonLineChartDataYear($validatedData['tahun_2'], $validatedData['volorval_2']);
+            return response()->json($result);
+        } else if ($validatedData['tipe_2'] == "impor") {
+            $result = $this->imporComparisonLineChartDataYear($validatedData['tahun_2'], $validatedData['volorval_2']);
+            return response()->json($result);
+        }
+    }
+
+// Fungsi Ekspor
+    private function eksportComparisonLineChartDataYear(Int $tahun, String $volorval)
+    {
+        $model = Ekspor::class;
+        return $this->getComparisonLineChartDataYear($model, $tahun, $volorval);
+    }
+
+// Fungsi Impor
+    private function imporComparisonLineChartDataYear(Int $tahun, String $volorval)
+    {
+        $model = impor::class;
+        return $this->getComparisonLineChartDataYear($model, $tahun, $volorval);
+    }
+
+// getData
+    private function getComparisonLineChartDataYear($model, Int $tahun, String $volorval)
+    {
+        $monthMapping = [
+            'January' => 1, 'February' => 2, 'March' => 3,
+            'April' => 4, 'May' => 5, 'June' => 6,
+            'July' => 7, 'August' => 8, 'September' => 9,
+            'October' => 10, 'November' => 11, 'December' => 12
+        ];
+
+        // Ambil kolom yang sesuai (Value atau Volume)
+        $column = ($volorval == "Value") ? 'Value' : 'Volume';
+
+        $dataOilGas = $model::where('Year', $tahun)
+            ->where('Type', 'Oil & Gas')
+            ->groupBy('Month')
+            ->selectRaw("Month, CAST(SUM($column) AS UNSIGNED) as total")
+            ->get()
+            ->sortBy(function ($item) use ($monthMapping) {
+                return $monthMapping[$item->Month];
+            })
+            ->pluck('total');
+
+        $dataNonOilGas = $model::where('Year', $tahun)
+            ->where('Type', 'Non Oil &Gas')
+            ->groupBy('Month')
+            ->selectRaw("Month, CAST(SUM($column) AS UNSIGNED) as total")
+            ->get()
+            ->sortBy(function ($item) use ($monthMapping) {
+                return $monthMapping[$item->Month];
+            })
+            ->pluck('total');
+
+        $bulan = $model::where('Year', $tahun)
+            ->selectRaw('Month')
+            ->groupBy('Month')
+            ->orderByRaw("FIELD(Month, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')")
+            ->pluck('Month');
+
+        // Mengembalikan array data yang bisa diubah menjadi JSON di luar
+        return ['dataAngkaOilGas' => $dataOilGas, 'dataAngkaNonOilGas' => $dataNonOilGas, 'bulan' => $bulan];
+    }
+
+
 }

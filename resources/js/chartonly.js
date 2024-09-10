@@ -56,7 +56,7 @@ window.postData_1 = function() {
         tahun: document.getElementById("tahun").value,
         tipe: document.getElementById("tipe").value,
         volorval: document.getElementById("volorval").value,
-    }); 
+    });
 
     // Post Data
     fetch('/data/chart_5', {
@@ -78,7 +78,7 @@ window.postData_1 = function() {
         options_chart_1.series[0].data = data.dataAngka;
         options_chart_1.xaxis.categories = data.bulan;
         options_chart_1.title.text = document.getElementById('volorval').value + " Trend Over Month In " + document.getElementById('tahun').value;
-        
+
         // Render Ulang Chart
         chart.updateOptions(options_chart_1);
         console.log(data); // Matikan Jika Sudah selesai Debug
