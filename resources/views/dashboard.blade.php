@@ -76,7 +76,7 @@
                                             <button id="nextYearValue" class="bg-blue-500 text-white px-3 py-1 rounded">&gt;</button>
                                         </div>
                                         <div id="totalValue" class="text-2xl font-bold text-center mt-2">$0</div>
-                                        <div class="text-sm text-gray-600 text-center mt-1">Million USD</div>
+                                        <div class="text-sm text-gray-600 text-center mt-1">USD</div>
                                     </div>
                                 </div>
 
@@ -90,7 +90,7 @@
                                             <button id="nextYearVolume" class="bg-green-500 text-white px-3 py-1 rounded">&gt;</button>
                                         </div>
                                         <div id="totalVolume" class="text-2xl font-bold text-center mt-2">0</div>
-                                        <div class="text-sm text-gray-600 text-center mt-1">Thousand Tons</div>
+                                        <div class="text-sm text-gray-600 text-center mt-1">Tons</div>
                                     </div>
                                 </div>
                             </div>
